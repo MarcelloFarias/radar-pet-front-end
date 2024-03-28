@@ -5,10 +5,11 @@ import Footer from "../../components/Footer/footer";
 import { Button, Input, Spinner } from "@nextui-org/react";
 import { getRandomDogImage } from "../../services/dogAPI/dog-api";
 import { Pet } from "../../interfaces/pet";
-import { getAllPetsPaged } from "../../services/radarPet/pet";
+import { getAllPetsPaged, searchPet } from "../../services/radarPet/pet";
 import PetList from "../../components/PetList/pet-list";
 import PetCard from "../../components/PetCard/pet-card";
 import ListPagination from "../../components/ListPagination/pagination";
+import { toastWarning, toastError } from "../../components/Toast/toast";
 
 function IndexPage() {
   const [randomPetImage, setRandomPetImage] = useState<string>("");
@@ -18,6 +19,11 @@ function IndexPage() {
   const [isPetsLoading, setIsPetsLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const handleSearchValue = (e: any) => {
+    setSearchValue(e.target.value);
+  };
 
   useEffect(() => {
     setIsRandomPetImageLoading(true);
@@ -39,13 +45,36 @@ function IndexPage() {
       .then((response: any) => {
         setPets(response?.pets);
         setTotalPages(response?.totalPages);
-        console.log(response.currentPage);
       })
       .catch((error: any) => console.log(error))
       .finally(() => {
         setIsPetsLoading(false);
       });
   }, [currentPage]);
+
+  function searchPetByName() {
+    setIsPetsLoading(true);
+
+    if (searchValue) {
+      searchPet(searchValue)
+        .then((response: any) => {
+          if (response?.message) {
+            return toastError(response?.message);
+          }
+
+          setPets(response.pets);
+        })
+        .catch((error: any) => console.log(error))
+        .finally(() => {
+          setIsPetsLoading(false);
+        });
+
+      return;
+    }
+
+    setIsPetsLoading(false);
+    return toastWarning("Digite um termo de busca !");
+  }
 
   return (
     <>
@@ -76,9 +105,18 @@ function IndexPage() {
       </main>
 
       <section className="section-container container mx-auto">
-        <div className="flex items-center">
-          <Input type="text" label="Pesquise por um pet..." />
-          <Button color="success" className="ml-5 text-2xl">
+        <div className="flex items-center px-5">
+          <Input
+            type="text"
+            label="Pesquise por um pet..."
+            value={searchValue}
+            onChange={handleSearchValue}
+          />
+          <Button
+            color="success"
+            className="ml-5 text-2xl"
+            onClick={() => searchPetByName()}
+          >
             <MdSearch />
           </Button>
         </div>
