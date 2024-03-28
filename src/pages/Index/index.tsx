@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { MdPets, MdSearch } from "react-icons/md";
 import UnloggedHeader from "../../components/UnloggedHeader/unlogged-header";
-import { Button, Input, Spinner, Pagination } from "@nextui-org/react";
+import Footer from "../../components/Footer/footer";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { getRandomDogImage } from "../../services/dogAPI/dog-api";
 import { Pet } from "../../interfaces/pet";
 import { getAllPetsPaged } from "../../services/radarPet/pet";
@@ -51,7 +52,7 @@ function IndexPage() {
       <UnloggedHeader />
 
       <main className="section-container flex items-center justify-around">
-        <div>
+        <div className="random-pet-image-container">
           {isRandomPetImageLoading ? (
             <Spinner size="md" />
           ) : (
@@ -101,6 +102,8 @@ function IndexPage() {
           pageController={setCurrentPage}
         />
       </div>
+
+      <Footer />
     </>
   );
 }

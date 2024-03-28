@@ -14,7 +14,7 @@ function UnloggedHeader() {
   return (
     <Navbar>
       <NavbarBrand className="text-2xl">
-        <MdPets /> Radar Pet
+        <MdPets /> <span className="navbar-brand-text">Radar Pet</span>
       </NavbarBrand>
 
       <NavbarContent>

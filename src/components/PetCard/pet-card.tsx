@@ -7,7 +7,7 @@ interface IPetCardProps {
 
 function PetCard(props: IPetCardProps) {
   return (
-    <Card className="max-w-52">
+    <Card className="w-52">
       <CardBody>
         {props.pet?.image ? (
           <Image

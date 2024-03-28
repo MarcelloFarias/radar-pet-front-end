@@ -29,3 +29,22 @@ body {
   min-height: auto;
   padding: 2rem;
 }
+
+@media (max-width: 767px) {
+  .random-pet-image-container {
+    display: none;
+  }
+}
+
+@media (max-width: 527px) {
+  .pet-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .navbar-brand-text {
+    display: none;
+  }
+}
