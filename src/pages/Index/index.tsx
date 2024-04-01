@@ -98,7 +98,12 @@ function IndexPage() {
             <MdPets />
           </h1>
           <h1 className="text-2xl mt-5">Cadastrou ... Achou</h1>
-          <Button color="primary" variant="shadow" className="mt-5">
+          <Button
+            color="primary"
+            variant="shadow"
+            className="mt-5"
+            radius="full"
+          >
             Quero cadastrar um pet
           </Button>
         </div>
