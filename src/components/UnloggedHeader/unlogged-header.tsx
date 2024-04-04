@@ -4,6 +4,7 @@ import {
   NavbarItem,
   NavbarContent,
   Button,
+  Link,
 } from "@nextui-org/react";
 import { MdPets } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +19,18 @@ function UnloggedHeader() {
       </NavbarBrand>
 
       <NavbarContent>
-        <div className="w-full flex items-center justify-end">
+        <div className="container flex items-center justify-end">
+          <NavbarItem>
+            <Link href="/" className="text-neutral-500">
+              Home
+            </Link>
+          </NavbarItem>
           <NavbarItem>
             <Button
               color="success"
               radius="full"
               onClick={() => navigate("/login")}
+              className="ml-5"
             >
               Entrar
             </Button>
@@ -33,8 +40,9 @@ function UnloggedHeader() {
             <Button
               color="primary"
               radius="full"
-              className="ml-5"
               onClick={() => navigate("/signup")}
+              variant="flat"
+              className="ml-5"
             >
               Cadastre-se
             </Button>

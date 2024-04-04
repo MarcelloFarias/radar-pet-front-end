@@ -110,17 +110,19 @@ function IndexPage() {
       </main>
 
       <section className="section-container container mx-auto">
-        <div className="flex items-center px-5">
+        <div className="flex items-center px-5 max-w-lg">
           <Input
             type="text"
             label="Pesquise por um pet..."
             value={searchValue}
             onChange={handleSearchValue}
+            radius="full"
           />
           <Button
             color="success"
             className="ml-5 text-2xl"
             onClick={() => searchPetByName()}
+            radius="full"
           >
             <MdSearch />
           </Button>
