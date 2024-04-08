@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLogin } from "../../interfaces/user";
+import { UserLogin, UserRegistration } from "../../interfaces/user";
 
 const baseUrl = "http://localhost:8089";
 
@@ -10,6 +10,20 @@ export async function authenticateUser(userLoginData: UserLogin) {
     return response.data;
   } catch (error: any) {
     console.log("Fail to authenticate user -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}
+
+export async function registerUser(user: UserRegistration) {
+  try {
+    const response = await axios.post(`${baseUrl}/users`, user);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to register user -> ", error);
 
     if (error.response) {
       return error.response.data;
