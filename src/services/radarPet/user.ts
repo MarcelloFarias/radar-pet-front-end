@@ -30,3 +30,21 @@ export async function registerUser(user: UserRegistration) {
     }
   }
 }
+
+export async function authorizeUser(userToken: string) {
+  try {
+    const response = await axios.get(`${baseUrl}/users/auth`, {
+      headers: {
+        "x-access-token": userToken,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to authorize user -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}

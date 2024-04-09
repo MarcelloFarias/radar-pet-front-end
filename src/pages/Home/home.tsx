@@ -1,29 +1,55 @@
-import { useEffect, useState } from "react";
-import { MdPets, MdSearch } from "react-icons/md";
-import UnloggedHeader from "../../components/UnloggedHeader/unlogged-header";
-import Footer from "../../components/Footer/footer";
-import { Button, Input, Spinner } from "@nextui-org/react";
-import { Pet } from "../../interfaces/pet";
-import { getAllPetsPaged, searchPet } from "../../services/radarPet/pet";
-import PetList from "../../components/PetList/pet-list";
-import PetCard from "../../components/PetCard/pet-card";
-import ListPagination from "../../components/ListPagination/pagination";
-import { toastWarning, toastError } from "../../components/Toast/toast";
+import { useContext, useEffect, useState } from "react";
+import { userContext } from "../../contexts/user-context";
+import { authorizeUser } from "../../services/radarPet/user";
+import { toastError, toastInfo } from "../../components/Toast/toast";
 import { useNavigate } from "react-router-dom";
-import RandomPetImage from "../../components/RandomPetImage/random-pet-image";
+import LoggedHeader from "../../components/LoggedHeader/logged-header";
+import Footer from "../../components/Footer/footer";
+import { MdSearch } from "react-icons/md";
+import { Input, Button, Spinner } from "@nextui-org/react";
+import { Pet } from "../../interfaces/pet";
+import { toastWarning } from "../../components/Toast/toast";
+import { searchPet } from "../../services/radarPet/pet";
+import { getAllPetsPaged } from "../../services/radarPet/pet";
+import PetList from "../../components/PetList/pet-list";
+import ListPagination from "../../components/ListPagination/pagination";
+import PetCard from "../../components/PetCard/pet-card";
 
-function IndexPage() {
+function Home() {
   const navigate = useNavigate();
 
-  const [pets, setPets] = useState<Pet[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [_, setUser] = useContext(userContext);
   const [isPetsLoading, setIsPetsLoading] = useState<boolean>(false);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [searchValue, setSearchValue] = useState<string>("");
 
   const handleSearchValue = (e: any) => {
     setSearchValue(e.target.value);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("user-token");
+
+    if (token) {
+      authorizeUser(token)
+        .then((response: any) => {
+          if (response?.message) {
+            toastError(response?.message);
+            return navigate("/");
+          }
+
+          setUser(response);
+        })
+        .catch((error: any) => console.log(error));
+
+      return;
+    }
+
+    toastInfo("Faça login para continuar !");
+    return navigate("/");
+  }, []);
 
   useEffect(() => {
     setIsPetsLoading(true);
@@ -65,30 +91,15 @@ function IndexPage() {
 
   return (
     <>
-      <UnloggedHeader />
+      <LoggedHeader />
 
-      <main className="section-container flex items-center justify-around">
-        <RandomPetImage />
-
-        <div className="flex items-center flex-col">
-          <h1 className="text-8xl">
-            <MdPets />
-          </h1>
-          <h1 className="text-2xl mt-5">Cadastrou ... Achou</h1>
-          <Button
-            color="primary"
-            variant="shadow"
-            className="mt-5"
-            radius="full"
-            onClick={() => navigate("/login")}
-          >
-            Quero cadastrar um pet
+      <main className="section-container container mx-auto">
+        <div className="flex justify-end px-5 mt-10">
+          <Button color="success" onClick={() => {}} radius="full">
+            Registrar Pet
           </Button>
         </div>
-      </main>
-
-      <section className="section-container container mx-auto">
-        <div className="flex items-center px-5 max-w-lg">
+        <div className="flex items-center px-5 mt-5 max-w-lg">
           <Input
             type="text"
             label="Pesquise por um pet..."
@@ -116,19 +127,18 @@ function IndexPage() {
             })}
           </PetList>
         )}
-      </section>
-
-      <div className="container mx-auto flex items-center justify-center my-10">
-        <ListPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          pageController={setCurrentPage}
-        />
-      </div>
+        <div className="container mx-auto flex items-center justify-center my-10">
+          <ListPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageController={setCurrentPage}
+          />
+        </div>
+      </main>
 
       <Footer />
     </>
   );
 }
 
-export default IndexPage;
+export default Home;

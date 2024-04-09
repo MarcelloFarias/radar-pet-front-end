@@ -7,8 +7,11 @@ import { toastError, toastWarning } from "../../components/Toast/toast";
 import { authenticateUser } from "../../services/radarPet/user";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import RandomPetImage from "../../components/RandomPetImage/random-pet-image";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [userLogin, setUserLogin] = useState<UserLogin>({
     email: "",
     password: "",
@@ -38,6 +41,7 @@ function Login() {
           }
 
           localStorage.setItem("user-token", response?.token);
+          return navigate("/home");
         })
         .catch((error: any) => console.log(error))
         .finally(() => {
@@ -113,6 +117,7 @@ function Login() {
             size="md"
             radius="full"
             variant="flat"
+            onClick={() => navigate("/signup")}
           >
             Criar uma conta
           </Button>

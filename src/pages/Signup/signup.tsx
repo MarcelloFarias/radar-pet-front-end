@@ -11,8 +11,11 @@ import {
   toastSuccess,
   toastWarning,
 } from "../../components/Toast/toast";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<UserRegistration>({
     name: "",
     email: "",
@@ -181,6 +184,7 @@ function Signup() {
             variant="flat"
             radius="full"
             className="w-full mt-5"
+            onClick={() => navigate("/login")}
           >
             Ir para Login
           </Button>
