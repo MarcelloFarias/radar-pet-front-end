@@ -10,3 +10,13 @@ export interface Pet {
   image: string;
   author: User;
 }
+
+export interface PetRegistration {
+  name: string;
+  address: string;
+  description: string;
+  lastSeen: Date;
+  status: string;
+  image: string;
+  author: User;
+}

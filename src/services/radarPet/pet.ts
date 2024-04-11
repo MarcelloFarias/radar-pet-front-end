@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PetRegistration } from "../../interfaces/pet";
 
 const baseUrl = "http://localhost:8089";
 
@@ -21,6 +22,20 @@ export async function searchPet(name: string) {
     return response.data;
   } catch (error: any) {
     console.log("Fail to search pet -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}
+
+export async function registerPet(pet: PetRegistration) {
+  try {
+    const response = await axios.post(`${baseUrl}/pets`, pet);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to register pet -> ", error);
 
     if (error.response) {
       return error.response.data;

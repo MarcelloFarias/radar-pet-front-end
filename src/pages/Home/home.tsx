@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoggedHeader from "../../components/LoggedHeader/logged-header";
 import Footer from "../../components/Footer/footer";
 import { MdSearch } from "react-icons/md";
-import { Input, Button, Spinner } from "@nextui-org/react";
+import { Input, Button, Spinner, useDisclosure } from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
 import { toastWarning } from "../../components/Toast/toast";
 import { searchPet } from "../../services/radarPet/pet";
@@ -14,9 +14,11 @@ import { getAllPetsPaged } from "../../services/radarPet/pet";
 import PetList from "../../components/PetList/pet-list";
 import ListPagination from "../../components/ListPagination/pagination";
 import PetCard from "../../components/PetCard/pet-card";
+import RegisterPetModal from "../../components/RegisterPetModal/register-pet-modal";
 
 function Home() {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [_, setUser] = useContext(userContext);
@@ -95,7 +97,7 @@ function Home() {
 
       <main className="section-container container mx-auto">
         <div className="flex justify-end px-5 mt-10">
-          <Button color="success" onClick={() => {}} radius="full">
+          <Button color="success" onClick={onOpen} radius="full">
             Registrar Pet
           </Button>
         </div>
@@ -137,6 +139,7 @@ function Home() {
       </main>
 
       <Footer />
+      <RegisterPetModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
     </>
   );
 }
