@@ -5,11 +5,29 @@ import {
   NavbarContent,
   Button,
   Link,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 import { MdPets } from "react-icons/md";
 import { MdLogout, MdSettings } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function LoggedHeader() {
+  const navigate = useNavigate();
+
+  function logout() {
+    const token = localStorage.getItem("user-token");
+
+    if (token) {
+      localStorage.removeItem("user-token");
+      return navigate("/");
+    }
+
+    return;
+  }
+
   return (
     <Navbar>
       <NavbarBrand className="text-2xl">
@@ -31,12 +49,28 @@ function LoggedHeader() {
               <MdSettings />
             </Link>
 
-            <Button
-              className="w-2 ml-2 bg-transparent text-xl text-red-500"
-              size="sm"
-            >
-              <MdLogout />
-            </Button>
+            <Dropdown backdrop="blur">
+              <DropdownTrigger>
+                <Button
+                  className="w-2 ml-2 bg-transparent text-xl text-red-500"
+                  size="sm"
+                >
+                  <MdLogout />
+                </Button>
+              </DropdownTrigger>
+
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="cancel">Cancelar</DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  className="text-danger"
+                  color="danger"
+                  onClick={() => logout()}
+                >
+                  Sair
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </NavbarItem>
         </div>
       </NavbarContent>
