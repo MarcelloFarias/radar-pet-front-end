@@ -43,6 +43,7 @@ function Home() {
           }
 
           setUser(response);
+          localStorage.setItem("user-id", response._id);
         })
         .catch((error: any) => console.log(error));
 

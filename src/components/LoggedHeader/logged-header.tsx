@@ -22,6 +22,7 @@ function LoggedHeader() {
 
     if (token) {
       localStorage.removeItem("user-token");
+      localStorage.removeItem("user-id");
       return navigate("/");
     }
 
@@ -41,7 +42,7 @@ function LoggedHeader() {
               Home
             </Link>
 
-            <Link href="/home" className="text-neutral-500 ml-5">
+            <Link href="/my-registrations" className="text-neutral-500 ml-5">
               Meus Registros
             </Link>
 

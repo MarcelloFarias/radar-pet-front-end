@@ -1,13 +1,31 @@
-import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Button,
+  Image,
+  CardHeader,
+} from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
+import { MdEdit } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
 
-interface IPetCardProps {
+interface IPetActionCardProps {
   pet: Pet;
 }
 
-function PetCard(props: IPetCardProps) {
+function PetActionCard(props: IPetActionCardProps) {
   return (
     <Card className="w-52">
+      <CardHeader>
+        <Button color="warning" size="sm">
+          <MdEdit />
+        </Button>
+
+        <Button color="danger" size="sm" className="ml-3">
+          <FaTrash />
+        </Button>
+      </CardHeader>
       <CardBody>
         {props.pet?.image ? (
           <Image
@@ -40,11 +58,11 @@ function PetCard(props: IPetCardProps) {
       </CardBody>
       <CardFooter>
         <Button color="primary" variant="flat" className="w-full">
-          Ver mais
+          Detalhes
         </Button>
       </CardFooter>
     </Card>
   );
 }
 
-export default PetCard;
+export default PetActionCard;

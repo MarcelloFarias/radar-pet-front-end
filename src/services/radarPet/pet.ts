@@ -42,3 +42,16 @@ export async function registerPet(pet: PetRegistration) {
     }
   }
 }
+
+export async function getAllPets() {
+  try {
+    const response = await axios.get(`${baseUrl}/pets`);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to get pets -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}
