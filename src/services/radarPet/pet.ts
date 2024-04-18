@@ -1,5 +1,6 @@
 import axios from "axios";
 import { PetRegistration } from "../../interfaces/pet";
+import { Pet } from "../../interfaces/pet";
 
 const baseUrl = "http://localhost:8089";
 
@@ -49,6 +50,20 @@ export async function getAllPets() {
     return response.data;
   } catch (error: any) {
     console.log("Fail to get pets -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}
+
+export async function updatePet(pet: Pet) {
+  try {
+    const response = await axios.put(`${baseUrl}/pets/${pet?._id}`, pet);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to update pet -> ", error);
 
     if (error.response) {
       return error.response.data;

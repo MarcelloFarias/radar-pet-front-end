@@ -1,14 +1,8 @@
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Button,
-  Image,
-  CardHeader,
-} from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
 import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
+import UpdatePetModal from "../UpdatePetModal/update-pet-modal";
 
 interface IPetActionCardProps {
   pet: Pet;
@@ -17,15 +11,6 @@ interface IPetActionCardProps {
 function PetActionCard(props: IPetActionCardProps) {
   return (
     <Card className="w-52">
-      <CardHeader>
-        <Button color="warning" size="sm">
-          <MdEdit />
-        </Button>
-
-        <Button color="danger" size="sm" className="ml-3">
-          <FaTrash />
-        </Button>
-      </CardHeader>
       <CardBody>
         {props.pet?.image ? (
           <Image
@@ -56,8 +41,16 @@ function PetActionCard(props: IPetActionCardProps) {
             .replace("-", "/")}
         </small>
       </CardBody>
-      <CardFooter>
-        <Button color="primary" variant="flat" className="w-full">
+      <CardFooter className="flex flex-col">
+        <div className="flex items-center justify-between w-full">
+          <UpdatePetModal pet={props.pet} />
+
+          <Button color="danger">
+            <FaTrash />
+          </Button>
+        </div>
+
+        <Button color="primary" variant="flat" className="w-full mt-5">
           Detalhes
         </Button>
       </CardFooter>

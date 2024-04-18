@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import LoggedHeader from "../../components/LoggedHeader/logged-header";
 import { Pet } from "../../interfaces/pet";
 import { getAllPets } from "../../services/radarPet/pet";
-import { Button, Input, Spinner, useDisclosure } from "@nextui-org/react";
+import { Input, Spinner } from "@nextui-org/react";
 import PetList from "../../components/PetList/pet-list";
 import PetActionsCard from "../../components/PetActionsCard/pet-actions-card";
 import Footer from "../../components/Footer/footer";
 import RegisterPetModal from "../../components/RegisterPetModal/register-pet-modal";
 
 function MyRegistrations() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [pets, setPets] = useState<any>([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const handleSearchValue = (e: any) => {
+    setSearchValue(e.target.value);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -47,15 +50,10 @@ function MyRegistrations() {
             label="Pesquisar por um pet..."
             radius="full"
             className="w-3/4"
+            value={searchValue}
+            onChange={handleSearchValue}
           />
-          <Button
-            color="success"
-            radius="full"
-            className="ml-5"
-            onClick={onOpen}
-          >
-            Registrar pet
-          </Button>
+          <RegisterPetModal />
         </div>
 
         {isLoading ? (
@@ -64,15 +62,22 @@ function MyRegistrations() {
           </div>
         ) : (
           <PetList>
-            {pets?.map((pet: Pet) => {
-              return <PetActionsCard key={pet?._id} pet={pet} />;
-            })}
+            {pets
+              ?.filter((pet: any) => {
+                if (
+                  pet.name.toLowerCase().includes(searchValue.toLowerCase())
+                ) {
+                  return pet;
+                }
+                return;
+              })
+              .map((pet: Pet) => {
+                return <PetActionsCard key={pet?._id} pet={pet} />;
+              })}
           </PetList>
         )}
       </main>
       <Footer />
-
-      <RegisterPetModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
     </>
   );
 }
