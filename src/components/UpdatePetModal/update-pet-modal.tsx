@@ -89,7 +89,7 @@ function UpdatePetModal(props: IUpdatePetModal) {
         <MdEdit />
       </Button>
 
-      <Modal size="3xl" onClose={onClose} isOpen={isOpen}>
+      <Modal placement="auto" size="3xl" onClose={onClose} isOpen={isOpen}>
         <ModalContent>
           <ModalHeader>Editar um pet</ModalHeader>
           <ModalBody>
@@ -140,8 +140,10 @@ function UpdatePetModal(props: IUpdatePetModal) {
 
               <div className="w-1/2 px-5">
                 <label className="text-xs">Foto do pet</label>
-                <InputFile name="image" onChange={uploadImage} />
-                <img className="w-20 mt-5" src={pet?.image} />
+                <div className="flex items-center">
+                  <InputFile name="image" onChange={uploadImage} />
+                  <img className="w-8 mt-5" src={pet?.image} />
+                </div>
               </div>
             </div>
 

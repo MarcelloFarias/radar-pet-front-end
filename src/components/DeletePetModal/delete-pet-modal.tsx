@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -20,7 +21,11 @@ interface IDeletePetModalProps {
 function DeletePetModal(props: IDeletePetModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   function confirmDeletePet() {
+    setIsLoading(true);
+
     if (props.pet._id) {
       deletePet(props.pet._id)
         .then((response: any) => {
@@ -31,8 +36,13 @@ function DeletePetModal(props: IDeletePetModalProps) {
           onClose();
           return toastError(response?.message);
         })
-        .catch((error: any) => console.log(error));
+        .catch((error: any) => console.log(error))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -56,6 +66,7 @@ function DeletePetModal(props: IDeletePetModalProps) {
               onClick={() => confirmDeletePet()}
             >
               Excluir
+              {isLoading ? <Spinner size="md" /> : null}
             </Button>
           </ModalFooter>
         </ModalContent>
