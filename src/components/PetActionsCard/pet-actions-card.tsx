@@ -1,8 +1,7 @@
 import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
-import { MdEdit } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
 import UpdatePetModal from "../UpdatePetModal/update-pet-modal";
+import DeletePetModal from "../DeletePetModal/delete-pet-modal";
 
 interface IPetActionCardProps {
   pet: Pet;
@@ -45,9 +44,7 @@ function PetActionCard(props: IPetActionCardProps) {
         <div className="flex items-center justify-between w-full">
           <UpdatePetModal pet={props.pet} />
 
-          <Button color="danger">
-            <FaTrash />
-          </Button>
+          <DeletePetModal pet={props.pet} />
         </div>
 
         <Button color="primary" variant="flat" className="w-full mt-5">

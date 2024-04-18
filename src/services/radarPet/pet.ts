@@ -70,3 +70,17 @@ export async function updatePet(pet: Pet) {
     }
   }
 }
+
+export async function deletePet(petId: string) {
+  try {
+    const response = await axios.delete(`${baseUrl}/pets/${petId}`);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to delete pet -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}
