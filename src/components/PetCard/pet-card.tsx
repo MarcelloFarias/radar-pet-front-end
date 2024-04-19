@@ -1,11 +1,14 @@
 import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
+import { useNavigate } from "react-router-dom";
 
 interface IPetCardProps {
   pet: Pet;
 }
 
 function PetCard(props: IPetCardProps) {
+  const navigate = useNavigate();
+
   return (
     <Card className="w-52">
       <CardBody>
@@ -39,7 +42,12 @@ function PetCard(props: IPetCardProps) {
         </small>
       </CardBody>
       <CardFooter>
-        <Button color="primary" variant="flat" className="w-full">
+        <Button
+          color="primary"
+          variant="flat"
+          className="w-full"
+          onClick={() => navigate(`/pet/${props.pet?._id}`)}
+        >
           Ver mais
         </Button>
       </CardFooter>

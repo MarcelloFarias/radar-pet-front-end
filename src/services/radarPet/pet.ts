@@ -84,3 +84,17 @@ export async function deletePet(petId: string) {
     }
   }
 }
+
+export async function getPetById(petId: any) {
+  try {
+    const response = await axios.get(`${baseUrl}/pets/${petId}`);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    console.log("Fail to get pet by id -> ", error);
+
+    if (error.response) {
+      return error.response.data;
+    }
+  }
+}

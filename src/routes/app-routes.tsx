@@ -4,6 +4,7 @@ import Login from "../pages/Login/login";
 import Signup from "../pages/Signup/signup";
 import Home from "../pages/Home/home";
 import MyRegistrations from "../pages/MyRegistrations/my-registrations";
+import PetDetails from "../pages/PetDetails/pet-details";
 
 function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/my-registrations" element={<MyRegistrations />} />
+        <Route path="/pet/:petId" element={<PetDetails />} />
       </Routes>
     </BrowserRouter>
   );

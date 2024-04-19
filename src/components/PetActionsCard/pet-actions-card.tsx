@@ -2,12 +2,15 @@ import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
 import { Pet } from "../../interfaces/pet";
 import UpdatePetModal from "../UpdatePetModal/update-pet-modal";
 import DeletePetModal from "../DeletePetModal/delete-pet-modal";
+import { useNavigate } from "react-router-dom";
 
 interface IPetActionCardProps {
   pet: Pet;
 }
 
 function PetActionCard(props: IPetActionCardProps) {
+  const navigate = useNavigate();
+
   return (
     <Card className="w-52">
       <CardBody>
@@ -47,7 +50,12 @@ function PetActionCard(props: IPetActionCardProps) {
           <DeletePetModal pet={props.pet} />
         </div>
 
-        <Button color="primary" variant="flat" className="w-full mt-5">
+        <Button
+          color="primary"
+          variant="flat"
+          className="w-full mt-5"
+          onClick={() => navigate(`/pet/${props.pet?._id}`)}
+        >
           Detalhes
         </Button>
       </CardFooter>
