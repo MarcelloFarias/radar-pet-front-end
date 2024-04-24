@@ -93,38 +93,32 @@ function UpdatePetModal(props: IUpdatePetModal) {
         <ModalContent>
           <ModalHeader>Editar um pet</ModalHeader>
           <ModalBody>
-            <div>
-              <Input
-                isRequired
-                radius="full"
-                type="text"
-                label="Nome do pet"
-                name="name"
-                onChange={handlePet}
-              />
-              <small>{pet?.name}</small>
-            </div>
-            <div>
-              <Input
-                isRequired
-                radius="full"
-                type="text"
-                label="Endereço do pet"
-                name="address"
-                onChange={handlePet}
-              />
-              <small>{pet?.address}</small>
-            </div>
-            <div>
-              <Textarea
-                isRequired
-                label="Descrição do pet"
-                placeholder="Aponte descrições sobre o pet, para que seja mais fácil identificá-lo..."
-                name="description"
-                onChange={handlePet}
-              />
-              <small>{pet?.description}</small>
-            </div>
+            <Input
+              isRequired
+              radius="full"
+              type="text"
+              label="Nome do pet"
+              name="name"
+              onChange={handlePet}
+              value={pet?.name}
+            />
+            <Input
+              isRequired
+              radius="full"
+              type="text"
+              label="Endereço do pet"
+              name="address"
+              onChange={handlePet}
+              value={pet?.address}
+            />
+            <Textarea
+              isRequired
+              label="Descrição do pet"
+              placeholder="Aponte descrições sobre o pet, para que seja mais fácil identificá-lo..."
+              name="description"
+              onChange={handlePet}
+              value={pet?.description}
+            />
             <div className="flex items-center">
               <div className="w-1/2">
                 <Input
@@ -135,7 +129,13 @@ function UpdatePetModal(props: IUpdatePetModal) {
                   name="lastSeen"
                   onChange={handlePet}
                 />
-                <small>{pet?.lastSeen?.toString().split("T")[0]}</small>
+                <small>
+                  {pet?.lastSeen
+                    .toString()
+                    .substring(0, 10)
+                    .replace("-", "/")
+                    .replace("-", "/")}
+                </small>
               </div>
 
               <div className="w-1/2 px-5">
