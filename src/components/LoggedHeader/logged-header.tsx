@@ -46,7 +46,7 @@ function LoggedHeader() {
               Meus Registros
             </Link>
 
-            <Link href="/home" className="text-neutral-500 ml-5 text-xl">
+            <Link href="/settings" className="text-neutral-500 ml-5 text-xl">
               <MdSettings />
             </Link>
 

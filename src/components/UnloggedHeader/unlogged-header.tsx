@@ -22,7 +22,7 @@ function UnloggedHeader() {
         <div className="container flex items-center justify-end">
           <NavbarItem>
             <Link href="/" className="text-neutral-500">
-              Home
+              Início
             </Link>
           </NavbarItem>
           <NavbarItem>
