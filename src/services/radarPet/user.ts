@@ -63,9 +63,9 @@ export async function getUserById(userId: string) {
   }
 }
 
-export async function updateUser(userId: string) {
+export async function updateUser(userId: string, data: any) {
   try {
-    const response = await axios.put(`${baseUrl}/users/${userId}`);
+    const response = await axios.put(`${baseUrl}/users/${userId}`, data);
     console.log(response);
     return response.data;
   } catch (error: any) {
