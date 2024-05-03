@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../contexts/user-context";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import LoggedHeader from "../../components/LoggedHeader/logged-header";
 import {
   getUserById,
@@ -26,6 +26,10 @@ function Settings() {
   const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
     useState<boolean>(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] =
+    useState<boolean>(false);
+  const [isUpdateUserLoading, setIsUpdateUserLoading] =
+    useState<boolean>(false);
+  const [isUpdatePasswordLoading, setIsUpdatePasswordLoading] =
     useState<boolean>(false);
 
   const handlePasswords = (e: any) => {
@@ -65,6 +69,8 @@ function Settings() {
         })
         .catch((error: any) => console.log(error));
     }
+
+    document.title = "Radar Pet - Configurações";
   }, []);
 
   function editUser() {
@@ -74,6 +80,8 @@ function Settings() {
         user.name !== prevUserData?.name ||
         user.phone !== prevUserData?.phone
       ) {
+        setIsUpdateUserLoading(true);
+
         updateUser(user?._id, user)
           .then((response: any) => {
             console.log(response);
@@ -86,10 +94,12 @@ function Settings() {
 
             return toastError(response?.message);
           })
-          .catch((error: any) => console.log(error));
+          .catch((error: any) => console.log(error))
+          .finally(() => {
+            setIsUpdateUserLoading(false);
+          });
         return;
       }
-
       return toastWarning("As informações devem ser diferentes das atuais !");
     }
 
@@ -98,16 +108,25 @@ function Settings() {
 
   function editPassword() {
     if (passwords.newPassword && passwords.oldPassword) {
+      setIsUpdatePasswordLoading(true);
+
       updatePassword(user?._id, passwords)
         .then((response: any) => {
           if (response?.updatedUser) {
+            setPasswords({
+              oldPassword: "",
+              newPassword: "",
+            });
             setUser(response?.updatedUser);
             return toastSuccess(response?.message);
           }
 
           return toastError(response?.message);
         })
-        .catch((error: any) => console.log(error));
+        .catch((error: any) => console.log(error))
+        .finally(() => {
+          setIsUpdatePasswordLoading(false);
+        });
 
       return;
     }
@@ -152,6 +171,7 @@ function Settings() {
           onClick={() => editUser()}
         >
           Salvar
+          {isUpdateUserLoading ? <Spinner size="md" /> : null}
         </Button>
 
         <div className="m-10">
@@ -216,6 +236,7 @@ function Settings() {
           onClick={() => editPassword()}
         >
           Salvar
+          {isUpdatePasswordLoading ? <Spinner size="md" /> : null}
         </Button>
       </div>
       <Footer />
