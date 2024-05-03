@@ -31,7 +31,7 @@ function LoggedHeader() {
 
   return (
     <Navbar>
-      <NavbarBrand className="text-2xl">
+      <NavbarBrand className="text-2xl" onClick={() => navigate("/home")}>
         <MdPets /> <span className="navbar-brand-text">Radar Pet</span>
       </NavbarBrand>
 
