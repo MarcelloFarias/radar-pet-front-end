@@ -10,7 +10,7 @@ Radar pet é um projeto voltado a compertilhamento e gestão de animais desapare
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-Foi também utilizada a biblioteca de componentes Next UI.
+Foi também utilizada a biblioteca de componentes Next UI: https://nextui.org/
 
 # 🔨 Funcionalidades do projeto
 - Autenticação do usuário
@@ -23,7 +23,7 @@ Foi também utilizada a biblioteca de componentes Next UI.
 - Detalhes de um pet
 - Atualização das informações de um pet
 - Exclusão de um pet
-- Exibir imagens aleatórias de pets
+- Exibir imagens aleatórias de pets, para tal, foi utilizada a API: https://dog.ceo/dog-api/
 
 # 🖥️ Telas
 - Início
